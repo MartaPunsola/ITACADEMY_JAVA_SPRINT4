@@ -1,7 +1,7 @@
 package cat.itacademy.s04.t02.n02.controller;
 
 import cat.itacademy.s04.t02.n02.model.Fruit;
-import cat.itacademy.s04.t02.n02.service.FruitService;
+import cat.itacademy.s04.t02.n02.service.FruitServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import java.util.List;
 public class FruitController {
 
     @Autowired
-    private FruitService fruitService;
+    private FruitServiceImpl fruitService;
 
     @PostMapping("/add")
     public ResponseEntity<String> addFruit(@RequestBody Fruit fruit) {
