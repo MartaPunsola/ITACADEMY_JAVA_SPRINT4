@@ -35,10 +35,7 @@ public class FruitController {
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateFruit(@PathVariable("id") int id, @RequestBody Fruit fruit) {
         Fruit fruitFound;
-        fruitFound = fruitService.getFruitById(id);
-        fruitFound.setName(fruit.getName());
-        fruitFound.setQuantityKg(fruit.getQuantityKg());
-        fruitService.addFruit(fruitFound);
+        fruitFound = fruitService.updateFruit(id, fruit);
         return ResponseEntity.ok().body("The fruit with id " + id + " has been successfully updated." +
                 "\nName: " + fruitFound.getName() + ", Quantity in kilos: " + fruitFound.getQuantityKg());
     }

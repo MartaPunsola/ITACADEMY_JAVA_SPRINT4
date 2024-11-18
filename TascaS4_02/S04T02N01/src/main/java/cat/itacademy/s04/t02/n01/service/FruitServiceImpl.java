@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FruitServiceImpl implements FruitService {
@@ -25,12 +24,9 @@ public class FruitServiceImpl implements FruitService {
     }
 
     @Override
-    public Fruit getFruitById(int id) throws FruitNotFoundException {
-        Optional<Fruit> optionalFruit = fruitRepository.findById(id);
-        if(optionalFruit.isEmpty()) {
-            throw new FruitNotFoundException("Fruit with id " + id + " not found.");
-        }
-        return optionalFruit.get();
+    public Fruit getFruitById(int id) {
+        return fruitRepository.findById(id).orElseThrow(() ->
+                new FruitNotFoundException("Fruit with id " + id + " not found."));
     }
 
     @Override
@@ -43,11 +39,17 @@ public class FruitServiceImpl implements FruitService {
     }
 
     @Override
-    public void deleteFruit(int id) throws FruitNotFoundException{
-        Optional<Fruit> optionalFruit = fruitRepository.findById(id);
-        if(optionalFruit.isEmpty()) {
-            throw new FruitNotFoundException("Fruit with id " + id + " not found.");
-        }
+    public Fruit updateFruit(int id, Fruit fruit) {
+        Fruit fruitFound;
+        fruitFound = getFruitById(id);
+        fruitFound.setName(fruit.getName());
+        fruitFound.setQuantityKg(fruit.getQuantityKg());
+        return addFruit(fruitFound);
+    }
+
+    @Override
+    public void deleteFruit(int id) {
+        getFruitById(id);
         fruitRepository.deleteById(id);
     }
 
